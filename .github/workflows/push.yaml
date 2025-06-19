@@ -21,9 +21,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-    outputs:
-      image-digest: ${{ steps.push.outputs.digest }}
-      image-metadata: ${{ steps.meta.outputs.json }}
 
     steps:
       - name: Checkout repository
@@ -67,10 +64,3 @@ jobs:
           # 使用 registry 缓存替代 GHA 缓存，避免签名过期问题
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:cache
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:cache,mode=max
-
-      - name: Generate artifact attestation
-        uses: actions/attest-build-provenance@v2
-        with:
-          subject-name: ghcr.io/${{ github.repository }}
-          subject-digest: ${{ steps.push.outputs.digest }}
-          push-to-registry: true
