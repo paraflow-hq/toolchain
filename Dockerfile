@@ -4,9 +4,6 @@ FROM mcr.microsoft.com/devcontainers/base:jammy AS base
 
 FROM base AS emscripten
 
-ARG http_proxy=http://sg-squid-test.zhenguanyu.com:80
-ARG https_proxy=http://sg-squid-test.zhenguanyu.com:80
-
 RUN <<EOF
 #!/bin/bash
 set -eu
