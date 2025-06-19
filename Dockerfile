@@ -81,7 +81,7 @@ FROM base AS wasm-split
 
 ARG WASM_SPLIT_VERSION=25.6.0
 
-# 安装Rust环境
+# Init Rust Environment
 RUN <<EOF
 #!/bin/bash
 set -eu
@@ -89,7 +89,6 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 source ~/.cargo/env
 EOF
 
-# 将Rust添加到PATH
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 RUN <<EOF
