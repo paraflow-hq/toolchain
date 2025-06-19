@@ -1,27 +1,28 @@
 #!/bin/bash
 # arch-wget - download files based on architecture
-# Usage: arch-wget AARCH64_URL X86_URL downloadTarget
+# Usage: arch-wget ARM64_URL AMD64_URL downloadTarget
 
 set -eu
 
 if [ $# -ne 3 ]; then
-    echo "Usage: arch-wget AARCH64_URL X86_URL downloadTarget"
+    echo "Usage: arch-wget ARM64_URL AMD64_URL downloadTarget"
     echo "Example: arch-wget https://example.com/file-arm64.tar.gz https://example.com/file-x86.tar.gz /tmp/file.tar.gz"
     exit 1
 fi
 
-AARCH64_URL="$1"
-X86_URL="$2"
+ARM64_URL="$1"
+AMD64_URL="$2"
 DOWNLOAD_TARGET="$3"
 
 ARCH=$(uname -m)
 
 if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
-    DOWNLOAD_URL="$AARCH64_URL"
+    DOWNLOAD_URL="$ARM64_URL"
 elif [ "$ARCH" = "x86_64" ] || [ "$ARCH" = "amd64" ]; then
-    DOWNLOAD_URL="$X86_URL"
+    DOWNLOAD_URL="$AMD64_URL"
 else
-    DOWNLOAD_URL="$X86_URL"
+    echo "Unsupported architecture: $ARCH"
+    exit 1
 fi
 
 echo "Using download URL: $DOWNLOAD_URL for architecture: $ARCH"
