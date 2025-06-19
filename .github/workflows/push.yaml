@@ -22,7 +22,7 @@ jobs:
       contents: read
       packages: write
     outputs:
-      image-digest: ${{ steps.build.outputs.digest }}
+      image-digest: ${{ steps.push.outputs.digest }}
       image-metadata: ${{ steps.meta.outputs.json }}
 
     steps:
