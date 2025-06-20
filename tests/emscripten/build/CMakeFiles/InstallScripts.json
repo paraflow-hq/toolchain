@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/pw/workspace/toolchain/tests/verify-emscripten/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

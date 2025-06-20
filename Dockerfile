@@ -347,14 +347,30 @@ EOF
 FROM toolchain AS verify-cmake
 
 # Copy the cmake test project
-COPY tests/verify-cmake /tmp/verify-cmake
+COPY tests/cmake /tmp/test
 
 # Build and test the cmake project
 RUN <<EOF
 #!/bin/bash
 set -eu
-cd /tmp/verify-cmake
-chmod +x build_and_test.sh
-./build_and_test.sh
+cd /tmp/test
+chmod +x test.sh
+./test.sh
+EOF
+
+##################################################
+
+FROM toolchain AS verify-emscripten
+
+# Copy the emscripten test project
+COPY tests/emscripten /tmp/test
+
+# Build and test the emscripten project
+RUN <<EOF
+#!/bin/bash
+set -eu
+cd /tmp/test
+chmod +x test.sh
+./test.sh
 EOF
 

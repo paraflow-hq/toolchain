@@ -1,0 +1,1 @@
+/opt/homebrew/Cellar/emscripten/4.0.8/libexec/em++ -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 -s NODEJS_CATCH_EXIT=0 @CMakeFiles/emscripten_test.dir/objects1.rsp -o emscripten_test.js

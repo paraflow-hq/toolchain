@@ -1,0 +1,54 @@
+Start testing: Jun 20 12:31 CST
+----------------------------------------------------------
+1/1 Testing: emscripten_node_test
+1/1 Test: emscripten_node_test
+Command: "/opt/homebrew/bin/node" "emscripten_test.js"
+Directory: /Users/pw/workspace/toolchain/tests/verify-emscripten/build
+"emscripten_node_test" start time: Jun 20 12:31 CST
+Output:
+----------------------------------------------------------
+=== Emscripten C++ Test ===
+
+1. Testing basic C++ features...
+Vector size: 5
+Sum of vector: 15
+
+2. Testing smart pointers and classes...
+Addition: 10.5 + 20.3 = 30.8
+Multiplication: 7.0 * 8.0 = 56
+Power: 2.0^8.0 = 256
+History size: 3
+History: 30.8 56 256 
+
+3. Testing Fibonacci function...
+Fibonacci(0) = 0
+Fibonacci(1) = 1
+Fibonacci(2) = 1
+Fibonacci(3) = 2
+Fibonacci(4) = 3
+Fibonacci(5) = 5
+Fibonacci(6) = 8
+Fibonacci(7) = 13
+Fibonacci(8) = 21
+Fibonacci(9) = 34
+Fibonacci(10) = 55
+
+4. Testing string processing...
+Original: "hello emscripten world"
+Processed: "Processed: HELLO EMSCRIPTEN WORLD"
+
+5. Testing STL algorithms...
+Original data: 5 2 8 1 9 3 
+Sorted data: 1 2 3 5 8 9 
+Max element: 9
+
+=== All tests completed successfully! ===
+<end of output>
+Test time =   0.17 sec
+----------------------------------------------------------
+Test Passed.
+"emscripten_node_test" end time: Jun 20 12:31 CST
+"emscripten_node_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jun 20 12:31 CST

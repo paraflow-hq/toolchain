@@ -1,0 +1,4 @@
+/Users/pw/workspace/toolchain/tests/verify-cmake/build/CMakeFiles/libcxx_test.dir
+/Users/pw/workspace/toolchain/tests/verify-cmake/build/CMakeFiles/test.dir
+/Users/pw/workspace/toolchain/tests/verify-cmake/build/CMakeFiles/edit_cache.dir
+/Users/pw/workspace/toolchain/tests/verify-cmake/build/CMakeFiles/rebuild_cache.dir

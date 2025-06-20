@@ -1,1 +1,2 @@
 tests/verify-cmake/build
+tests/verify-emscripten/build
