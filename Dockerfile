@@ -307,5 +307,22 @@ COPY --link --from=protoc /tmp/protoc/ /usr/local/
 COPY --link --from=mkcert /tmp/mkcert /usr/local/bin/
 
 ADD files/check-env /usr/local/bin/check-env
-RUN chmod +x /usr/local/bin/check-env
-RUN /usr/local/bin/check-env
+
+# Check if the environment is set up correctly
+RUN <<EOF
+#!/bin/bash
+set -eu
+
+chmod +x /usr/local/bin/check-env
+
+# Check environment
+/usr/local/bin/check-env
+
+# Test node-canvas installation
+mkdir -pv /tmp/test-canvas
+cd /tmp/test-canvas
+npm init -y
+pnpm install canvas
+cd /
+rm -rf /tmp/test-canvas
+EOF
