@@ -1,11 +1,16 @@
 cmake_minimum_required(VERSION 3.16)
+
+# Force use of clang++ compiler
+set(CMAKE_C_COMPILER clang)
+set(CMAKE_CXX_COMPILER clang++)
+
 project(LibcxxTest CXX)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Use libc++ as the standard library
+# Use libc++ as the standard library (only works with clang++)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 
 # Find required libraries
