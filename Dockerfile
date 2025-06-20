@@ -390,3 +390,19 @@ chmod +x test.sh
 ./test.sh
 EOF
 
+##################################################
+
+FROM toolchain AS test-chinese-font
+
+# Copy the chinese font test project
+COPY tests/chinese-font /tmp/test
+
+# Test Chinese font rendering capabilities
+RUN <<EOF
+#!/bin/bash
+set -eu
+cd /tmp/test
+chmod +x test.sh
+./test.sh
+EOF
+
