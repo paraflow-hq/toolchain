@@ -1,4 +1,4 @@
-name: Build and publish multi-arch Docker image to ghcr.io
+name: Build and publish toolchain multi-arch Docker image to ghcr.io
 on:
   release:
     types: [published]
@@ -52,16 +52,30 @@ jobs:
             type=sha
             type=raw,value=latest,enable={{is_default_branch}}
 
-      - name: Build and push multi-arch Docker image
+      # 步骤1: 构建验证镜像（不推送）
+      - name: Build verification image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          target: toolchain-verify
+          push: false
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:cache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:cache,mode=max
+        env:
+          BUILDKIT_PROGRESS: plain
+
+      # 步骤2: 构建并推送主镜像
+      - name: Build and push main toolchain image
         id: push
         uses: docker/build-push-action@v5
         with:
           context: .
           platforms: linux/amd64,linux/arm64
+          target: toolchain
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:cache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:cache,mode=max
         env:
           BUILDKIT_PROGRESS: plain

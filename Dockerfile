@@ -301,22 +301,26 @@ COPY --link --from=direnv /tmp/direnv /usr/local/bin/
 COPY --link --from=protoc /tmp/protoc/ /usr/local/
 COPY --link --from=mkcert /tmp/mkcert /usr/local/bin/
 
-ADD files/check-env /usr/local/bin/check-env
+##################################################
 
-# Check if the environment is set up correctly
+FROM toolchain AS toolchain-verify
+
+ADD tests/check-env /usr/local/bin/check-env
+RUN chmod +x /usr/local/bin/check-env
+
 RUN <<EOF
 #!/bin/bash
 set -eu
 
 source /opt/emsdk/emsdk_env.sh
-
-chmod +x /usr/local/bin/check-env
+em++ --version # sanity checks
 
 # Check environment
-em++ --version # sanity checks
 /usr/local/bin/check-env
+EOF
 
 # Test node-canvas installation
+RUN <<EOF
 mkdir -pv /tmp/test-canvas
 cd /tmp/test-canvas
 npm init -y
