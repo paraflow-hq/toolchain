@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+
+GREEN='\033[32m'
+RED='\033[31m'
+NC='\033[0m'
+
+has_error=0
+
+echo_cmd() {
+    echo -e "$GREEN$1$NC"
+}
+echo_err() {
+    has_error=1
+    echo -e "$RED$1$NC"
+}
+
+check_version() {
+    local cmd=$1
+
+    local cmd_name=$(echo "$cmd" | awk '{print $1}')
+
+    local cmd_desc="check $cmd_name version"
+
+    echo_cmd "$cmd_desc"
+
+    if ! which $cmd_name >/dev/null 2>&1; then
+        echo_err "  [$cmd_name] command not found"
+    else
+        echo "  $(which $cmd_name)"
+
+        if ! $cmd >/dev/null 2>&1; then
+            echo_err "  [$cmd] version check failed"
+        else
+            echo "  $($cmd 2>&1 | head -n 1)"
+        fi
+    fi
+
+    echo ""
+}
+
+echo_env_var() {
+    local var_name=$1
+    local var_value=$(eval echo \$$var_name)
+
+    echo_cmd "check $var_name"
+
+    if [ -z "$var_value" ]; then
+        echo_err "  [$var_name] is not set"
+    else
+        echo "  $var_name=$var_value"
+    fi
+
+    echo ""
+}
+
+lock_version() {
+    local cmd=$1
+    local pattern=$2
+
+    local cmd_name=$(echo "$cmd" | awk '{print $1}')
+
+    local cmd_desc="lock $cmd_name version"
+
+    echo_cmd "$cmd_desc"
+
+    if ! which $cmd_name >/dev/null 2>&1; then
+        echo_err "  [$cmd_name] command not found"
+    else
+        echo "  $(which $cmd_name)"
+
+        local output=$($cmd 2>&1 | head -n 1)
+
+        if echo "$output" | grep -E "$pattern" >/dev/null 2>&1; then
+            local version_part=$(echo "$output" | grep -Eo "$pattern")
+            local colored_output=$(echo "$output" | sed "s/$version_part/\\${GREEN}${version_part}\\${NC}/")
+            echo -e "  $colored_output (matched $pattern)"
+        else
+            echo_err "  [$output] does not match required pattern: $pattern"
+        fi
+    fi
+
+    echo ""
+}
+
+check_version "cmake --version"
+lock_version "grep --version" "grep \(GNU grep\) 3\.[0-9]+"
+lock_version "sed --version" "sed \(GNU sed\) 4\.[0-9]+"
+check_version "uv --version"
+lock_version "node -v" "v2[23]\.[0-9]+\.[0-9]+"
+lock_version "pnpm -v" "9\.[0-9]+\.[0-9]+"
+check_version "ninja --version"
+lock_version "clang++ -v" "version 20\.[0-9]+\.[0-9]+"
+lock_version "clangd --version" "version 20\.[0-9]+\.[0-9]+"
+lock_version "clang-format --version" "version 20\.[0-9]+\.[0-9]+"
+check_version "protoc --version"
+lock_version "em++ --version 2>&1" " 4\.[0-9]+\.[0-9]+"
+check_version "pre-commit --version"
+check_version "direnv --version"
+check_version "wasm-split --version"
+check_version "sccache --version"
+check_version "ossutil64 -v"
+check_version "mold -v"
+
+echo_env_var "EMSCRIPTEN_ROOT"
+echo_env_var "LLVM_ROOT"
+
+if [ $has_error -ne 0 ]; then
+    exit 1
+fi

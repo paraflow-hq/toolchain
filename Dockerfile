@@ -305,3 +305,7 @@ COPY --link --from=ossutil /tmp/ossutil/ossutil64 /usr/local/bin/
 COPY --link --from=direnv /tmp/direnv /usr/local/bin/
 COPY --link --from=protoc /tmp/protoc/ /usr/local/
 COPY --link --from=mkcert /tmp/mkcert /usr/local/bin/
+
+ADD files/check-env /usr/local/bin/check-env
+RUN chmod +x /usr/local/bin/check-env
+RUN /usr/local/bin/check-env
