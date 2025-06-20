@@ -5,6 +5,8 @@ ARG BASE=mcr.microsoft.com/devcontainers/base:jammy
 
 FROM ${BASE} AS base
 
+# SYNC_BEGIN
+
 ##################################################
 
 FROM base AS emsdk
@@ -305,6 +307,8 @@ COPY --link --from=ossutil /tmp/ossutil/ossutil64 /usr/local/bin/
 COPY --link --from=direnv /tmp/direnv /usr/local/bin/
 COPY --link --from=protoc /tmp/protoc/ /usr/local/
 COPY --link --from=mkcert /tmp/mkcert /usr/local/bin/
+
+# SYNC_END
 
 ##################################################
 
