@@ -1,4 +1,9 @@
-FROM mcr.microsoft.com/devcontainers/base:jammy AS base
+# syntax=docker/dockerfile:1.4
+# -----------------------------------------------------------------------------
+
+ARG BASE=mcr.microsoft.com/devcontainers/base:jammy
+
+FROM ${BASE} AS base
 
 ##################################################
 
