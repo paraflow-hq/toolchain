@@ -203,7 +203,7 @@ ARG UV_VERSION=0.6.4
 RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
 #!/bin/bash
 set -eu
-apt-get update && apt-get upgrade -y
+apt-get update
 apt-get install -y python3 python3-pip pre-commit
 pip3 install poetry==${POETRY_VERSION} uv==${UV_VERSION}
 EOF
@@ -216,9 +216,10 @@ ARG PNPM_VERSION=9.12.3
 RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
 #!/bin/bash
 curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash -
-    apt-get install -y nodejs
-    npm install -g npm@${NPM_VERSION} pnpm@v${PNPM_VERSION}
-    npx -y playwright install-deps
+apt-get update
+apt-get install -y nodejs
+npm install -g npm@${NPM_VERSION} pnpm@v${PNPM_VERSION}
+npx -y playwright install-deps
 EOF
 
 # link ld to mold
@@ -231,6 +232,7 @@ EOF
 RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
 #!/bin/bash
 set -eu
+apt-get update
 apt-get install -y freeglut3-dev \
     libegl1-mesa-dev \
     libfontconfig-dev \
@@ -265,6 +267,7 @@ EOF
 RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
 #!/bin/bash
 set -eu
+apt-get update
 apt-get install -y brotli ghostscript imagemagick libdw-dev librsvg2-bin ripgrep
 EOF
 
