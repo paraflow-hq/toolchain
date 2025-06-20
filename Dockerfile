@@ -313,6 +313,7 @@ source /opt/emsdk/emsdk_env.sh
 chmod +x /usr/local/bin/check-env
 
 # Check environment
+em++ --version # sanity checks
 /usr/local/bin/check-env
 
 # Test node-canvas installation
