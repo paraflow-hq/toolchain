@@ -312,7 +312,7 @@ COPY --link --from=mkcert /tmp/mkcert /usr/local/bin/
 
 ##################################################
 
-FROM toolchain AS toolchain-verify
+FROM toolchain AS verify-env
 
 ADD tests/check-env /usr/local/bin/check-env
 RUN chmod +x /usr/local/bin/check-env
@@ -328,6 +328,10 @@ em++ --version # sanity checks
 /usr/local/bin/check-env
 EOF
 
+##################################################
+
+FROM toolchain AS verify-node-canvas
+
 # Test node-canvas installation
 RUN <<EOF
 mkdir -pv /tmp/test-canvas
@@ -337,3 +341,20 @@ pnpm install canvas
 cd /
 rm -rf /tmp/test-canvas
 EOF
+
+##################################################
+
+FROM toolchain AS verify-cmake
+
+# Copy the cmake test project
+COPY tests/verify-cmake /tmp/verify-cmake
+
+# Build and test the cmake project
+RUN <<EOF
+#!/bin/bash
+set -eu
+cd /tmp/verify-cmake
+chmod +x build_and_test.sh
+./build_and_test.sh
+EOF
+

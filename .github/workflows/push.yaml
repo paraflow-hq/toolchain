@@ -69,7 +69,6 @@ jobs:
         with:
           context: .
           platforms: linux/amd64,linux/arm64
-          target: toolchain-verify
           push: false
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:cache
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:cache,mode=max
