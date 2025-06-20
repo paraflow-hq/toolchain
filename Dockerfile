@@ -227,14 +227,6 @@ RUN <<EOF
 ln -sf /usr/local/bin/mold /usr/bin/ld
 EOF
 
-# emsdk
-RUN <<EOF
-#!/bin/bash
-set -eu
-echo 'EMSDK_QUIET=1 source /opt/emsdk/emsdk_env.sh' >> /home/vscode/.bashrc
-echo 'EMSDK_QUIET=1 source /opt/emsdk/emsdk_env.sh' >> /home/vscode/.zshrc
-EOF
-
 # skia build dependencies
 RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
 #!/bin/bash
@@ -312,6 +304,8 @@ ADD files/check-env /usr/local/bin/check-env
 RUN <<EOF
 #!/bin/bash
 set -eu
+
+source /opt/emsdk/emsdk_env.sh
 
 chmod +x /usr/local/bin/check-env
 
