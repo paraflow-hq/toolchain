@@ -1,0 +1,12 @@
+{
+  "name": "playwright-test",
+  "version": "1.0.0",
+  "description": "Test Playwright browser automation",
+  "main": "test.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.40.0"
+  }
+}

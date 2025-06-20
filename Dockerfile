@@ -312,7 +312,7 @@ COPY --link --from=mkcert /tmp/mkcert /usr/local/bin/
 
 ##################################################
 
-FROM toolchain AS verify-env
+FROM toolchain AS test-env
 
 ADD tests/check-env /usr/local/bin/check-env
 RUN chmod +x /usr/local/bin/check-env
@@ -330,7 +330,7 @@ EOF
 
 ##################################################
 
-FROM toolchain AS verify-node-canvas
+FROM toolchain AS test-node-canvas
 
 # Test node-canvas installation
 RUN <<EOF
@@ -344,7 +344,7 @@ EOF
 
 ##################################################
 
-FROM toolchain AS verify-cmake
+FROM toolchain AS test-cmake
 
 # Copy the cmake test project
 COPY tests/cmake /tmp/test
@@ -360,12 +360,28 @@ EOF
 
 ##################################################
 
-FROM toolchain AS verify-emscripten
+FROM toolchain AS test-emscripten
 
 # Copy the emscripten test project
 COPY tests/emscripten /tmp/test
 
 # Build and test the emscripten project
+RUN <<EOF
+#!/bin/bash
+set -eu
+cd /tmp/test
+chmod +x test.sh
+./test.sh
+EOF
+
+##################################################
+
+FROM toolchain AS test-playwright
+
+# Copy the playwright test project
+COPY tests/playwright /tmp/test
+
+# Build and test the playwright automation
 RUN <<EOF
 #!/bin/bash
 set -eu
