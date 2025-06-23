@@ -302,6 +302,7 @@ RUN sed -i '/domain="coder" .* pattern="PDF"/ s/rights="none"/rights="read"/' /e
 RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} --mount=type=bind,source=files/fangsong.ttf,target=/tmp/fangsong.ttf <<EOF
 #!/bin/bash
 set -eu
+apt-get update
 # Accept Microsoft Font EULA
 echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
 # copy fonts
