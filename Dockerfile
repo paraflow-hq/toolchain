@@ -103,6 +103,8 @@ RUN <<EOF
 set -eu
 apt-get update
 apt-get install -y git build-essential pkg-config libssl-dev
+apt-get clean
+rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 EOF
 
 RUN <<EOF
@@ -187,6 +189,8 @@ RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=
 set -eu
 apt-get update && apt-get upgrade -y
 apt-get install -y lsb-release wget software-properties-common gnupg
+apt-get clean
+rm -rf /var/lib/apt/lists/*
 EOF
 
 # llvm & C/C++
@@ -201,6 +205,9 @@ apt-get install -y libc++-${LLVM_VERSION}-dev libc++abi-${LLVM_VERSION}-dev libc
 
 update-alternatives --install /usr/bin/clang clang /usr/lib/llvm-${LLVM_VERSION}/bin/clang 100
 update-alternatives --install /usr/bin/clang++ clang++ /usr/lib/llvm-${LLVM_VERSION}/bin/clang++ 100
+
+apt-get clean
+rm -rf /var/lib/apt/lists/*
 EOF
 
 ARG POETRY_VERSION=1.4.2
@@ -213,6 +220,8 @@ set -eu
 apt-get update
 apt-get install -y python3 python3-pip pre-commit
 pip3 install poetry==${POETRY_VERSION} uv==${UV_VERSION}
+apt-get clean
+rm -rf /var/lib/apt/lists/*
 EOF
 
 ARG NODE_VERSION=22.x
@@ -227,6 +236,8 @@ apt-get update
 apt-get install -y nodejs
 npm install -g npm@${NPM_VERSION} pnpm@v${PNPM_VERSION}
 npx -y playwright install-deps
+apt-get clean
+rm -rf /var/lib/apt/lists/*
 EOF
 
 # link ld to mold
@@ -252,6 +263,8 @@ apt-get install -y freeglut3-dev \
     libjpeg-dev \
     libpng-dev \
     libwebp-dev
+apt-get clean
+rm -rf /var/lib/apt/lists/*
 EOF
 
 # fix lldb path: https://github.com/llvm/llvm-project/issues/55575
@@ -268,6 +281,8 @@ RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=
 set -eu
 apt-get update
 apt-get install -y libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev libpixman-1-dev pkg-config
+apt-get clean
+rm -rf /var/lib/apt/lists/*
 EOF
 
 # others
@@ -276,6 +291,8 @@ RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=
 set -eu
 apt-get update
 apt-get install -y brotli ghostscript imagemagick libdw-dev librsvg2-bin ripgrep
+apt-get clean
+rm -rf /var/lib/apt/lists/*
 EOF
 
 # imagemagick
@@ -292,6 +309,8 @@ mkdir -p /usr/share/fonts/truetype/msttcorefontscd
 cp /tmp/fangsong.ttf /usr/share/fonts/truetype/msttcorefontscd/
 # Other fonts
 apt install -y --no-install-recommends fontconfig ttf-mscorefonts-installer
+apt-get clean
+rm -rf /var/lib/apt/lists/*
 EOF
 
 ENV DEBIAN_FRONTEND=dialog
