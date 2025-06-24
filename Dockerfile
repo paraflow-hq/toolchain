@@ -207,7 +207,7 @@ apt-get update
 apt-get install -y \
     clang-${LLVM_VERSION} \
     clang++-${LLVM_VERSION} \
-    clang-tidy-${LLVM_VERSION}
+    clang-tidy-${LLVM_VERSION} \
     clang-format-${LLVM_VERSION} \
     clangd-${LLVM_VERSION} \
     llvm-${LLVM_VERSION} \
