@@ -188,9 +188,9 @@ RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=
 #!/bin/bash
 set -eu
 apt-get update && apt-get upgrade -y
-apt-get install -y lsb-release wget software-properties-common gnupg
+apt-get install -y curl wget gnupg lsb-release ca-certificates
 apt-get clean
-rm -rf /var/lib/apt/lists/*
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
 EOF
 
 # llvm & C/C++
@@ -199,6 +199,7 @@ RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=
 wget https://apt.llvm.org/llvm.sh
 chmod +x llvm.sh
 ./llvm.sh ${LLVM_VERSION}
+rm llvm.sh
 apt-get install -y clang-format-${LLVM_VERSION} cppcheck cpplint
 apt-get install -y build-essential ninja-build make cmake protobuf-compiler
 apt-get install -y libc++-${LLVM_VERSION}-dev libc++abi-${LLVM_VERSION}-dev libclang-rt-${LLVM_VERSION}-dev
@@ -207,7 +208,7 @@ update-alternatives --install /usr/bin/clang clang /usr/lib/llvm-${LLVM_VERSION}
 update-alternatives --install /usr/bin/clang++ clang++ /usr/lib/llvm-${LLVM_VERSION}/bin/clang++ 100
 
 apt-get clean
-rm -rf /var/lib/apt/lists/*
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
 EOF
 
 ARG POETRY_VERSION=1.4.2
@@ -221,7 +222,7 @@ apt-get update
 apt-get install -y python3 python3-pip pre-commit
 pip3 install poetry==${POETRY_VERSION} uv==${UV_VERSION}
 apt-get clean
-rm -rf /var/lib/apt/lists/*
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
 EOF
 
 ARG NODE_VERSION=22.x
@@ -235,9 +236,9 @@ curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash -
 apt-get update
 apt-get install -y nodejs
 npm install -g npm@${NPM_VERSION} pnpm@v${PNPM_VERSION}
-npx -y playwright install-deps
+npx -y playwright install-deps chrome
 apt-get clean
-rm -rf /var/lib/apt/lists/*
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache ~/.npm
 EOF
 
 # link ld to mold
@@ -264,7 +265,7 @@ apt-get install -y freeglut3-dev \
     libpng-dev \
     libwebp-dev
 apt-get clean
-rm -rf /var/lib/apt/lists/*
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
 EOF
 
 # fix lldb path: https://github.com/llvm/llvm-project/issues/55575
@@ -282,7 +283,7 @@ set -eu
 apt-get update
 apt-get install -y libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev libpixman-1-dev pkg-config
 apt-get clean
-rm -rf /var/lib/apt/lists/*
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
 EOF
 
 # others
@@ -292,7 +293,7 @@ set -eu
 apt-get update
 apt-get install -y brotli ghostscript imagemagick libdw-dev librsvg2-bin ripgrep
 apt-get clean
-rm -rf /var/lib/apt/lists/*
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
 EOF
 
 # imagemagick
@@ -311,7 +312,7 @@ cp /tmp/fangsong.ttf /usr/share/fonts/truetype/msttcorefontscd/
 # Other fonts
 apt install -y --no-install-recommends fontconfig ttf-mscorefonts-installer
 apt-get clean
-rm -rf /var/lib/apt/lists/*
+rm -rf /var/lib/apt/lists/* /var/tmp/* ~/.cache
 EOF
 
 ENV DEBIAN_FRONTEND=dialog
