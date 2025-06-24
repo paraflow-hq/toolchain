@@ -2,14 +2,16 @@
 # -----------------------------------------------------------------------------
 
 ARG BASE=ubuntu:22.04
+ARG BUILDPACK=buildpack-deps:22.04
 
 FROM ${BASE} AS base
+FROM ${BUILDPACK} AS build
 
 # SYNC_BEGIN
 
 ##################################################
 
-FROM buildpack-deps:22.04 AS emsdk
+FROM build AS emsdk
 
 ARG EMSCRIPTEN_VERSION=4.0.5
 
@@ -24,7 +26,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04 AS mold
+FROM build AS mold
 
 ARG MOLD_VERSION=2.40.1
 
@@ -44,7 +46,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04 AS sccache
+FROM build AS sccache
 
 ARG SCCACHE_VERSION=0.10.0
 
@@ -64,7 +66,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04 AS ossutil
+FROM build AS ossutil
 
 ARG OSSUTIL_VERSION=1.7.19
 
@@ -84,7 +86,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04 AS wasm-split
+FROM build AS wasm-split
 
 ARG WASM_SPLIT_VERSION=25.6.0
 
@@ -120,7 +122,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04 AS direnv
+FROM build AS direnv
 
 ARG DIR_ENV_VERSION=2.36.0
 
@@ -138,7 +140,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04 AS protoc
+FROM build AS protoc
 
 ARG PROTOC_VERSION=29.4
 
@@ -158,7 +160,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04 AS mkcert
+FROM build AS mkcert
 
 ARG MKCERT_VERSION=latest
 
