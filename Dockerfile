@@ -198,6 +198,8 @@ EOF
 # llvm & C/C++
 RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
 #!/bin/bash
+set -eu
+
 wget https://apt.llvm.org/llvm.sh
 chmod +x llvm.sh
 ./llvm.sh ${LLVM_VERSION}
