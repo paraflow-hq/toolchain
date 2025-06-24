@@ -236,6 +236,8 @@ ARG PNPM_VERSION=9.12.3
 # node & playwright
 RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
 #!/bin/bash
+set -eu
+
 curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash -
 apt-get update
 apt-get install -y nodejs
@@ -246,15 +248,13 @@ rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache ~/.npm
 EOF
 
 # link ld to mold
-RUN <<EOF
-#!/bin/bash
-ln -sf /usr/local/bin/mold /usr/bin/ld
-EOF
+RUN ln -sf /usr/local/bin/mold /usr/bin/ld
 
 # skia build dependencies
 RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
 #!/bin/bash
 set -eu
+
 apt-get update
 apt-get install -y freeglut3-dev \
     libegl1-mesa-dev \
@@ -276,6 +276,7 @@ EOF
 RUN <<EOF
 #!/bin/bash
 set -eu
+
 mkdir -p /usr/lib/local/lib/python3.10/dist-packages/
 ln -s /usr/lib/llvm-${LLVM_VERSION}/lib/python3.10/dist-packages/lldb /usr/lib/local/lib/python3.10/dist-packages/lldb
 EOF
@@ -284,6 +285,7 @@ EOF
 RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
 #!/bin/bash
 set -eu
+
 apt-get update
 apt-get install -y libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev libpixman-1-dev pkg-config
 apt-get clean
@@ -294,6 +296,7 @@ EOF
 RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
 #!/bin/bash
 set -eu
+
 apt-get update
 apt-get install -y brotli ghostscript imagemagick libdw-dev librsvg2-bin ripgrep git git-lfs gnupg2 openssh-client zsh
 apt-get clean
@@ -307,6 +310,7 @@ RUN sed -i '/domain="coder" .* pattern="PDF"/ s/rights="none"/rights="read"/' /e
 RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} --mount=type=bind,source=files/fangsong.ttf,target=/tmp/fangsong.ttf <<EOF
 #!/bin/bash
 set -eu
+
 apt-get update
 # Accept Microsoft Font EULA
 echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
