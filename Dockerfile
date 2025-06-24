@@ -200,16 +200,25 @@ RUN <<EOF
 #!/bin/bash
 set -eu
 
-wget https://apt.llvm.org/llvm.sh
-chmod +x llvm.sh
-./llvm.sh ${LLVM_VERSION}
-rm llvm.sh
-apt-get install -y clang-format-${LLVM_VERSION} cppcheck cpplint
+wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
+add-apt-repository "deb https://apt.llvm.org/jammy/ llvm-toolchain-jammy-${LLVM_VERSION} main"
+apt-get update
+
+
+apt-get install -y \
+    clang-${LLVM_VERSION} \
+    clang++-${LLVM_VERSION} \
+    clang-format-${LLVM_VERSION} \
+    lldb-${LLVM_VERSION} \
+    libc++-${LLVM_VERSION}-dev \
+    libc++abi-${LLVM_VERSION}-dev \
+    libclang-rt-${LLVM_VERSION}-dev
+
 apt-get install -y build-essential ninja-build make cmake protobuf-compiler
-apt-get install -y libc++-${LLVM_VERSION}-dev libc++abi-${LLVM_VERSION}-dev libclang-rt-${LLVM_VERSION}-dev
 
 update-alternatives --install /usr/bin/clang clang /usr/lib/llvm-${LLVM_VERSION}/bin/clang 100
 update-alternatives --install /usr/bin/clang++ clang++ /usr/lib/llvm-${LLVM_VERSION}/bin/clang++ 100
+update-alternatives --install /usr/bin/lldb lldb /usr/lib/llvm-${LLVM_VERSION}/bin/lldb 100
 
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
