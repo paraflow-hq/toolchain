@@ -64,7 +64,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04-curl AS ossutil
+FROM buildpack-deps:22.04-scm AS ossutil
 
 ARG OSSUTIL_VERSION=1.7.19
 
@@ -138,7 +138,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04-curl AS protoc
+FROM buildpack-deps:22.04-scm AS protoc
 
 ARG PROTOC_VERSION=29.4
 
