@@ -27,4 +27,4 @@ fi
 
 echo "Using download URL: $DOWNLOAD_URL for architecture: $ARCH"
 
-wget "$DOWNLOAD_URL" -O "$DOWNLOAD_TARGET"
+curl -L -f --retry 3 --connect-timeout 30 "$DOWNLOAD_URL" -o "$DOWNLOAD_TARGET"
