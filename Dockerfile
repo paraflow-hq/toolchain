@@ -204,11 +204,13 @@ wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
 add-apt-repository "deb https://apt.llvm.org/jammy/ llvm-toolchain-jammy-${LLVM_VERSION} main"
 apt-get update
 
-
 apt-get install -y \
     clang-${LLVM_VERSION} \
     clang++-${LLVM_VERSION} \
+    clang-tidy-${LLVM_VERSION}
     clang-format-${LLVM_VERSION} \
+    clangd-${LLVM_VERSION}
+    llvm-${LLVM_VERSION} \
     lldb-${LLVM_VERSION} \
     libc++-${LLVM_VERSION}-dev \
     libc++abi-${LLVM_VERSION}-dev \
