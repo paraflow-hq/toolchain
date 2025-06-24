@@ -337,7 +337,7 @@ COPY --link --from=direnv /tmp/direnv /usr/local/bin/
 COPY --link --from=protoc /tmp/protoc/ /usr/local/
 COPY --link --from=mkcert /tmp/mkcert /usr/local/bin/
 
-RUN em++ --version # sanity checks
+RUN ${EMSCRIPTEN_ROOT}/em++ --version # sanity checks
 
 # SYNC_END
 
