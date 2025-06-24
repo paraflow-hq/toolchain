@@ -9,7 +9,7 @@ FROM ${BASE} AS base
 
 ##################################################
 
-FROM buildpack-deps:22.04-scm AS emsdk
+FROM buildpack-deps:22.04 AS emsdk
 
 ARG EMSCRIPTEN_VERSION=4.0.5
 
@@ -24,7 +24,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04-curl AS mold
+FROM buildpack-deps:22.04 AS mold
 
 ARG MOLD_VERSION=2.40.1
 
@@ -44,7 +44,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04-curl AS sccache
+FROM buildpack-deps:22.04 AS sccache
 
 ARG SCCACHE_VERSION=0.10.0
 
@@ -64,7 +64,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04-scm AS ossutil
+FROM buildpack-deps:22.04 AS ossutil
 
 ARG OSSUTIL_VERSION=1.7.19
 
@@ -84,7 +84,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04-scm AS wasm-split
+FROM buildpack-deps:22.04 AS wasm-split
 
 ARG WASM_SPLIT_VERSION=25.6.0
 
@@ -120,7 +120,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04-curl AS direnv
+FROM buildpack-deps:22.04 AS direnv
 
 ARG DIR_ENV_VERSION=2.36.0
 
@@ -138,7 +138,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04-scm AS protoc
+FROM buildpack-deps:22.04 AS protoc
 
 ARG PROTOC_VERSION=29.4
 
@@ -158,7 +158,7 @@ EOF
 
 ##################################################
 
-FROM buildpack-deps:22.04-curl AS mkcert
+FROM buildpack-deps:22.04 AS mkcert
 
 ARG MKCERT_VERSION=latest
 
