@@ -190,7 +190,7 @@ RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=
 #!/bin/bash
 set -eu
 apt-get update && apt-get upgrade -y
-apt-get install -y curl wget gnupg lsb-release ca-certificates add-apt-repository
+apt-get install -y curl wget gnupg lsb-release ca-certificates software-properties-common
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
 EOF
