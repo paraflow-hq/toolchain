@@ -293,7 +293,7 @@ RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=
 #!/bin/bash
 set -eu
 apt-get update
-apt-get install -y brotli ghostscript imagemagick libdw-dev librsvg2-bin ripgrep git git-lfs gnupg2
+apt-get install -y brotli ghostscript imagemagick libdw-dev librsvg2-bin ripgrep git git-lfs gnupg2 openssh-client zsh
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
 EOF
