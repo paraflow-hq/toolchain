@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.4
 # -----------------------------------------------------------------------------
 
-ARG BASE=ubuntu/22.0
+ARG BASE=ubuntu:22.04
 
 FROM ${BASE} AS base
 
