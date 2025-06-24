@@ -186,7 +186,7 @@ ARG TARGETARCH
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
+RUN <<EOF
 #!/bin/bash
 set -eu
 apt-get update && apt-get upgrade -y
@@ -196,7 +196,7 @@ rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
 EOF
 
 # llvm & C/C++
-RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
+RUN <<EOF
 #!/bin/bash
 set -eu
 
@@ -219,7 +219,7 @@ ARG POETRY_VERSION=1.4.2
 ARG UV_VERSION=0.6.4
 
 # python
-RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
+RUN <<EOF
 #!/bin/bash
 set -eu
 apt-get update
@@ -234,7 +234,7 @@ ARG NPM_VERSION=10.9.0
 ARG PNPM_VERSION=9.12.3
 
 # node & playwright
-RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
+RUN <<EOF
 #!/bin/bash
 set -eu
 
@@ -251,7 +251,7 @@ EOF
 RUN ln -sf /usr/local/bin/mold /usr/bin/ld
 
 # skia build dependencies
-RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
+RUN <<EOF
 #!/bin/bash
 set -eu
 
@@ -282,7 +282,7 @@ ln -s /usr/lib/llvm-${LLVM_VERSION}/lib/python3.10/dist-packages/lldb /usr/lib/l
 EOF
 
 # node-canvas deps
-RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
+RUN <<EOF
 #!/bin/bash
 set -eu
 
@@ -293,12 +293,12 @@ rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
 EOF
 
 # others
-RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} <<EOF
+RUN <<EOF
 #!/bin/bash
 set -eu
 
 apt-get update
-apt-get install -y brotli ghostscript imagemagick libdw-dev librsvg2-bin ripgrep git git-lfs gnupg2 openssh-client zsh
+apt-get install -y brotli ghostscript imagemagick libdw-dev librsvg2-bin ripgrep git git-lfs gnupg2 openssh-client zsh unzip
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
 EOF
@@ -307,7 +307,7 @@ EOF
 RUN sed -i '/domain="coder" .* pattern="PDF"/ s/rights="none"/rights="read"/' /etc/ImageMagick-6/policy.xml
 
 # fonts
-RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} --mount=type=cache,target=/var/lib/apt,id=apt-lib-${TARGETARCH} --mount=type=bind,source=files/fangsong.ttf,target=/tmp/fangsong.ttf <<EOF
+RUN --mount=type=bind,source=files/fangsong.ttf,target=/tmp/fangsong.ttf <<EOF
 #!/bin/bash
 set -eu
 
