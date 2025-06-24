@@ -224,7 +224,7 @@ apt-get update
 apt-get install -y python3 python3-pip pre-commit
 pip3 install poetry==${POETRY_VERSION} uv==${UV_VERSION}
 apt-get clean
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache ~/.local/share/pip
 EOF
 
 ARG NODE_VERSION=22.x
