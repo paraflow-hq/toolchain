@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.4
 # -----------------------------------------------------------------------------
 
-ARG BASE=mcr.microsoft.com/devcontainers/base:jammy
+ARG BASE=ubuntu/22.0
 
 FROM ${BASE} AS base
 
