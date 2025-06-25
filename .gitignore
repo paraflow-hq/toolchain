@@ -2,3 +2,4 @@ tests/verify-cmake/build
 tests/verify-emscripten/build
 .DS_Store
 node_modules
+.claude/
