@@ -253,7 +253,7 @@ curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash -
 apt-get update
 apt-get install -y nodejs
 npm install -g npm@${NPM_VERSION} pnpm@v${PNPM_VERSION}
-npx -y playwright install-deps chrome
+npx -y playwright install-deps chromium
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache ~/.npm
 EOF
