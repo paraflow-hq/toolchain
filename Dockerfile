@@ -76,12 +76,9 @@ RUN <<EOF
 #!/bin/bash
 set -eu
 arch-wget \
-    "https://gosspublic.alicdn.com/ossutil/${OSSUTIL_VERSION}/ossutil-v${OSSUTIL_VERSION}-linux-arm64.zip" \
-    "https://gosspublic.alicdn.com/ossutil/${OSSUTIL_VERSION}/ossutil-v${OSSUTIL_VERSION}-linux-amd64.zip" \
-    "/tmp/ossutil.zip"
-mkdir /tmp/ossutil/
-unzip /tmp/ossutil.zip -d /tmp/ossutil/
-mv /tmp/ossutil/ossutil-* /tmp/ossutil/ossutil64
+    "https://github.com/paraflow-hq/third_party/releases/download/ossutil-v${OSSUTIL_VERSION}/ossutil-linux-arm64" \
+    "https://github.com/paraflow-hq/third_party/releases/download/ossutil-v${OSSUTIL_VERSION}/ossutil-linux-x64" \
+    "/tmp/ossutil64"
 EOF
 
 ##################################################
@@ -365,7 +362,7 @@ COPY --link --from=sccache /tmp/sccache/sccache /usr/local/bin/
 COPY --link --from=wasm-split /tmp/wasm-split /usr/local/bin/
 COPY --link --from=emsdk /tmp/emsdk ${EMSDK_DIR}
 COPY --link --from=mold /tmp/mold/ /usr/local/
-COPY --link --from=ossutil /tmp/ossutil/ossutil64 /usr/local/bin/
+COPY --link --from=ossutil /tmp/ossutil64 /usr/local/bin/
 COPY --link --from=direnv /tmp/direnv /usr/local/bin/
 COPY --link --from=protoc /tmp/protoc/ /usr/local/
 COPY --link --from=mkcert /tmp/mkcert /usr/local/bin/
