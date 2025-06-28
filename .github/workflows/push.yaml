@@ -65,14 +65,14 @@ jobs:
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:cache
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:cache,mode=max
 
-      - name: Verify image
-        uses: docker/build-push-action@v5
+      - name: Verify all images
+        uses: docker/bake-action@v4
         with:
-          context: .
-          platforms: linux/amd64,linux/arm64
           push: false
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:cache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:cache,mode=max
+          files: docker-bake.hcl
+          set: |
+            *.cache-from=type=registry,ref=ghcr.io/${{ github.repository }}:cache
+            *.cache-to=type=registry,ref=ghcr.io/${{ github.repository }}:cache,mode=max
         env:
           BUILDKIT_PROGRESS: plain
 
