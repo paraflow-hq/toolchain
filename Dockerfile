@@ -216,7 +216,7 @@ apt-get install -y \
     libc++abi-${LLVM_VERSION}-dev \
     libclang-rt-${LLVM_VERSION}-dev
 
-apt-get install -y build-essential ninja-build make cmake protobuf-compiler
+apt-get install -y build-essential ninja-build make cmake protobuf-compiler cppcheck cpplint
 
 update-alternatives --install /usr/bin/clang clang /usr/lib/llvm-${LLVM_VERSION}/bin/clang 100
 update-alternatives --install /usr/bin/clang++ clang++ /usr/lib/llvm-${LLVM_VERSION}/bin/clang++ 100
@@ -242,7 +242,7 @@ EOF
 
 ARG NODE_VERSION=22.x
 ARG NPM_VERSION=10.9.0
-ARG PNPM_VERSION=9.12.3
+ARG PNPM_VERSION=10.12.1
 
 # node & playwright
 RUN <<EOF
