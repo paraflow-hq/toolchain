@@ -68,7 +68,7 @@ EOF
 
 FROM build AS ossutil
 
-ARG OSSUTIL_VERSION=1.7.19
+ARG OSSUTIL_VERSION=1.7.8
 
 COPY files/arch-wget /usr/local/bin/arch-wget
 RUN chmod +x /usr/local/bin/arch-wget
