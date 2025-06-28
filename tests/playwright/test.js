@@ -6,10 +6,35 @@ async function testBrowser(browserType, browserName) {
     let browser;
     try {
         console.log(`Launching ${browserName}...`);
-        browser = await browserType.launch({ headless: true });
+        // Docker-specific browser launch options
+        const launchOptions = {
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-gpu'
+            ]
+        };
         
-        console.log(`Creating new page in ${browserName}...`);
-        const page = await browser.newPage();
+        if (browserName === 'Chromium') {
+            // Additional Chromium-specific options for Docker
+            launchOptions.args.push('--disable-web-security');
+            launchOptions.args.push('--disable-features=IsolateOrigins,site-per-process');
+        }
+        
+        browser = await browserType.launch(launchOptions);
+        
+        console.log(`Browser launched successfully. Creating new page in ${browserName}...`);
+        let page;
+        try {
+            page = await browser.newPage();
+        } catch (pageError) {
+            console.error(`Failed to create new page: ${pageError.message}`);
+            console.log('Retrying with timeout...');
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            page = await browser.newPage();
+        }
         
         // Test basic navigation
         console.log('Navigating to example.com...');

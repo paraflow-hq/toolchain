@@ -10,11 +10,16 @@ pnpm install
 
 # Install Playwright browsers if not already installed
 echo "Installing Playwright browsers..."
-npx playwright install
+# Force install browsers for the current architecture
+npx playwright install chromium firefox webkit
 
 # Verify browser installations
 echo "Verifying browser installations..."
 npx playwright install --dry-run
+
+# Show Playwright browser paths
+echo "Playwright browser paths:"
+npx playwright --help | grep -A5 "browser" || true
 
 # Run the test
 echo "Running Playwright automation tests..."
