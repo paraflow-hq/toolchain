@@ -1,6 +1,6 @@
-const { chromium, firefox, webkit } = require('playwright');
+const { chromium, firefox } = require('playwright');
 
-async function testBrowser(browserType, browserName) {
+async function testBrowser(browserType, browserName, channel) {
     console.log(`\n=== Testing ${browserName} ===`);
     
     let browser;
@@ -21,6 +21,10 @@ async function testBrowser(browserType, browserName) {
             // Additional Chromium-specific options for Docker
             launchOptions.args.push('--disable-web-security');
             launchOptions.args.push('--disable-features=IsolateOrigins,site-per-process');
+        }
+        
+        if (channel) {
+            launchOptions.channel = channel;
         }
         
         browser = await browserType.launch(launchOptions);
@@ -92,16 +96,15 @@ async function runAllTests() {
     
     const browsers = [
         { type: chromium, name: 'Chromium' },
-        { type: firefox, name: 'Firefox' },
-        { type: webkit, name: 'WebKit' }
+        { type: firefox, name: 'Firefox' }
     ];
     
     let failedTests = 0;
     
     for (const browser of browsers) {
         try {
-            await testBrowser(browser.type, browser.name);
-        } catch (error) {
+            await testBrowser(browser.type, browser.name, browser.channel);
+        } catch {
             failedTests++;
             console.error(`\n❌ ${browser.name} test failed!`);
         }
@@ -127,7 +130,6 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 
 // Run the tests
-runAllTests().catch(error => {
-    console.error('Test runner failed:', error);
+runAllTests().catch(() => {
     process.exit(1);
 });

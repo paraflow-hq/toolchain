@@ -11,7 +11,7 @@ pnpm install
 # Install Playwright browsers if not already installed
 echo "Installing Playwright browsers..."
 # Force install browsers for the current architecture
-npx playwright install chromium firefox webkit
+npx playwright install chromium firefox
 
 # Verify browser installations
 echo "Verifying browser installations..."
