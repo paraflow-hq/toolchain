@@ -79,6 +79,7 @@ arch-wget \
     "https://github.com/paraflow-hq/third_party/releases/download/ossutil-v${OSSUTIL_VERSION}/ossutil-linux-arm64" \
     "https://github.com/paraflow-hq/third_party/releases/download/ossutil-v${OSSUTIL_VERSION}/ossutil-linux-x64" \
     "/tmp/ossutil64"
+chmod a+x /tmp/ossutil64
 EOF
 
 ##################################################
