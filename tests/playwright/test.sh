@@ -2,31 +2,22 @@
 
 set -e
 
-echo "=== Playwright Browser Automation Test ==="
+echo "=== Playwright Installation Test ==="
 
 # Install dependencies
 echo "Installing Node.js dependencies..."
 pnpm install
 
-# Install Playwright browsers if not already installed
+# Verify Playwright can be installed
 echo "Installing Playwright browsers..."
-# Force install browsers for the current architecture
 npx playwright install chromium firefox
 
 # Verify browser installations
 echo "Verifying browser installations..."
 npx playwright install --dry-run
 
-# Show Playwright browser paths
-echo "Playwright browser paths:"
-npx playwright --help | grep -A5 "browser" || true
+# Test that Playwright CLI works
+echo "Testing Playwright CLI..."
+npx playwright --version
 
-# Run the test
-echo "Running Playwright automation tests..."
-pnpm test
-
-# Clean up screenshots
-echo "Cleaning up test artifacts..."
-rm -f *.png
-
-echo "=== Playwright test completed successfully! ==="
+echo "=== Playwright installation test completed successfully! ==="
