@@ -120,6 +120,24 @@ EOF
 
 ##################################################
 
+FROM build AS lefthook
+
+ARG LEFTHOOK_VERSION=1.12.2
+
+COPY files/arch-wget /usr/local/bin/arch-wget
+RUN chmod +x /usr/local/bin/arch-wget
+
+RUN <<EOF
+#!/bin/bash
+set -eu
+arch-wget "https://github.com/evilmartians/lefthook/releases/download/v${LEFTHOOK_VERSION}/lefthook_${LEFTHOOK_VERSION}_Linux_arm64" \
+    "https://github.com/evilmartians/lefthook/releases/download/v${LEFTHOOK_VERSION}/lefthook_${LEFTHOOK_VERSION}_Linux_x86_64" \
+    "/tmp/lefthook"
+chmod +x /tmp/lefthook
+EOF
+
+##################################################
+
 FROM build AS direnv
 
 ARG DIR_ENV_VERSION=2.36.0
@@ -367,6 +385,7 @@ COPY --link --from=ossutil /tmp/ossutil64 /usr/local/bin/
 COPY --link --from=direnv /tmp/direnv /usr/local/bin/
 COPY --link --from=protoc /tmp/protoc/ /usr/local/
 COPY --link --from=mkcert /tmp/mkcert /usr/local/bin/
+COPY --link --from=lefthook /tmp/lefthook /usr/local/bin/
 
 RUN ${EMSCRIPTEN_ROOT}/em++ --version # sanity checks
 
