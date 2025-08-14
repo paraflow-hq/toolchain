@@ -354,6 +354,21 @@ apt-get clean
 rm -rf /var/lib/apt/lists/* /var/tmp/* ~/.cache
 EOF
 
+# MySQL and Redis server
+RUN <<EOF
+#!/bin/bash
+set -eu
+
+apt-get update
+# Install MySQL server
+DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server
+# Install Redis server
+apt-get install -y redis-server
+apt-get clean
+rm -rf /var/lib/apt/lists/* /var/tmp/* ~/.cache
+EOF
+
+
 ENV DEBIAN_FRONTEND=dialog
 ENV EMSCRIPTEN_ROOT=${EMSDK_DIR}/upstream/emscripten
 ENV LLVM_ROOT=/usr/lib/llvm-${LLVM_VERSION}
